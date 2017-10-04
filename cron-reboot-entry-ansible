@@ -1,0 +1,1 @@
+@reboot /home/acn-iot/run_ansible_pull.sh -c -f >> /home/acn-iot/logs/log-ansible-cron.txt 2>&1

@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    RED.nodes.registerType('build-msg',{
+        category: 'rpdlite',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            msgtype: { value: "" },
+            gateway: { value: "" },
+            porttype: { value: "" },
+            address: { value: "" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name || ("Build Msg: "+this.gateway+"/"+this.msgtype+"/"+this.porttype+"/"+this.address)
+        }
+    });
+</script> <script type="text/x-red" data-template-name="build-msg">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-msgtype"><i class="icon-cog"></i> Msg Type</label>
+        <select id="node-input-msgtype" placeholder="0">
+            <option value="evt">Event</option>
+            <option value="cmd">Command</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gateway"><i class="icon-edit"></i> Edge Controller</label>
+        <input type="text" id="node-input-gateway" placeholder="Gateway">
+    </div>
+    <div class="form-row">
+        <label for="node-input-porttype"><i class="icon-edit"></i> Port Type</label>
+        <input type="text" id="node-input-porttype" placeholder="Type">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="icon-edit"></i> Address</label>
+        <input type="text" id="node-input-address" placeholder="Address">
+    </div>
+</script> 
+
+<script type="text/x-red" data-help-name="input-filter">
+    <p>Generate topic and message payload. The value field of the new payload is the input msg.payload</p>
+</script>
+

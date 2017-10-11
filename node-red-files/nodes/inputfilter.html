@@ -1,0 +1,44 @@
+<script type="text/javascript">
+    RED.nodes.registerType('input-filter',{
+        category: 'rpdlite',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            gateway: { value: "" },
+            porttype: { value: "" },
+            address: { value: "" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return "Filter: "+this.gateway+"/"+this.porttype+"/"+this.address
+        }
+    });
+</script> <script type="text/x-red" data-template-name="input-filter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-gateway"><i class="icon-edit"></i> Edge Controller</label>
+        <input type="text" id="node-input-gateway" placeholder="Gateway">
+    </div>
+    <div class="form-row">
+        <label for="node-input-porttype"><i class="icon-cog"></i> Port Type</label>
+        <select id="node-input-porttype" placeholder="0">
+            <option value="analog">Analog</option>
+            <option value="digital">Digital</option>
+            <option value="*" selected>Any</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="icon-edit"></i> Address</label>
+        <input type="text" id="node-input-address" placeholder="Address">
+    </div>
+</script> 
+
+<script type="text/x-red" data-help-name="input-filter">
+    <p>Filter relevant payload</p>
+</script>
+

@@ -148,7 +148,7 @@ sudo chmod 0755 $NEW_HOME/run_docker.sh
 sudo crontab -l -u root | cat - $REPO_DIR/cron-reboot-entry-docker | sudo crontab -u root -
 #--- copy node-red initial files
 mkdir $NEW_HOME/node-red-user-data
-cp $REPO_DIR/node-red-files/* $NEW_HOME/node-red-user-data/
+cp -r $REPO_DIR/node-red-files/* $NEW_HOME/node-red-user-data/
 
 #####################################################################################
 ## Set key environment variables

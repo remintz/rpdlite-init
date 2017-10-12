@@ -5,7 +5,7 @@ module.exports = function (RED) {
       var node = this;
       var context = this.context();
       var globalContext = this.context().global;
-
+      var hostname = globalContext.get('os').hostname();
       this.on('input', function (msg) {
 
          // Convert input into JSON message if necessary
@@ -20,31 +20,33 @@ module.exports = function (RED) {
 
          if (!msg.payload.device) {
             node.warn("device field not found on payload");
-	    node.send(null);
+            node.send(null);
             return;
          }
          if (!msg.payload.type) {
             node.warn("device type not found on payload");
-	    node.send(null);
+            node.send(null);
             return;
          }
          if (!msg.payload.address) {
             node.warn("device address not found on payload");
-	    node.send(null);
+            node.send(null);
             return;
          }
 
+         // if gateway name is left blank it defaults to the edge controller hostname
+         
          var gateway = config.gateway;
          if (!gateway) {
-            gateway = globalContext.get("DEFAULT_EDGE_CONTROLLER");
+            gateway = hostname;
          }
-	 if (!gateway) {
-            gateway="";
+         if (!gateway) {
+            gateway = "";
          }
 
          var pass = true;
 
-         if ((gateway.trim().length > 0) && (gateway.trim() != msg.payload.device.trim()) && (gateway.trim() != "*") ) {
+         if ((gateway.trim().length > 0) && (gateway.trim() != msg.payload.device.trim()) && (gateway.trim() != "*")) {
             pass = false;
          }
 

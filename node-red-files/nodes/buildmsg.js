@@ -7,11 +7,22 @@ module.exports = function (RED) {
       var globalContext = this.context().global;
 
       this.on('input', function (msg) {
-	 var topic = 'rpdlite/' + config.gateway + '/' + config.msgtype + '/' + config.porttype + '/' + config.address;
+         var device = config.gateway;
+         if (device.trim().length == 0) {
+            device = globalContext.get("os").hostname();
+         }
+         device = device.toLowerCase();
+         var address = config.address;
+         if (address.trim().length == 0) {
+            address = msg.topic;
+         }
+         address = address.toLowerCase();
+         var porttype = config.porttype.toLowerCase();
+	 var topic = 'rpdlite/' + device + '/' + config.msgtype + '/' + porttype + '/' + address;
          var payload = {
-            device: config.gateway,
-            type: config.porttype,
-            address: config.address,
+            device: device,
+            type: porttype,
+            address: address,
             value: msg.payload
             };
          msg.topic = topic;

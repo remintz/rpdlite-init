@@ -18,6 +18,8 @@ module.exports = function (RED) {
             return;
          }
 
+         var getvalue = config.getvalue || false;
+
          if (!msg.payload.device) {
             node.warn("device field not found on payload");
             node.send(null);
@@ -59,6 +61,9 @@ module.exports = function (RED) {
          }
 
          if (pass) {
+            if (getvalue) {
+               msg.payload = msg.payload.value;
+            }
             node.send(msg)
          } else {
             node.send(null)

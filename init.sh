@@ -141,6 +141,11 @@ fi
 cd $TMP_DIR
 curl -sSL https://get.docker.com | sh
 usermod -aG docker acn-iot
+
+#####################################################################################
+## Configure node-red container to run on boot
+#####################################################################################
+
 cd $NEW_HOME
 sudo cp -f $REPO_DIR/run_docker.sh $NEW_HOME/run_docker.sh
 sudo chmod 0755 $NEW_HOME/run_docker.sh
@@ -149,6 +154,16 @@ sudo crontab -l -u root | cat - $REPO_DIR/cron-reboot-entry-docker | sudo cronta
 #--- copy node-red initial files
 mkdir $NEW_HOME/node-red-user-data
 cp -r $REPO_DIR/node-red-files/* $NEW_HOME/node-red-user-data/
+
+#####################################################################################
+## Configure Agent Container to run on boot
+#####################################################################################
+
+cd $NEW_HOME
+sudo cp -f $REPO_DIR/run_agent.sh $NEW_HOME/run_agent.sh
+sudo chmod 0755 $NEW_HOME/run_agent.sh
+#--- add to run when boot
+sudo crontab -l -u root | cat - $REPO_DIR/cron-reboot-entry-agent | sudo crontab -u root -
 
 #####################################################################################
 ## Set key environment variables

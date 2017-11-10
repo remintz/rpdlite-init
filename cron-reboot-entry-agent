@@ -1,2 +1,2 @@
-@reboot cd /home/acn-iot;bash run_agent.sh >> /home/acn-iot/log-run-docker-cron.txt
+@reboot cd /home/acn-iot;sleep 120;bash run_agent.sh >> /home/acn-iot/log-run-docker-cron.txt
 

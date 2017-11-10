@@ -1,1 +1,0 @@
-@reboot cd /home/acn-iot/webserver;python webserver.py >> /home/acn-iot/webserver/log.txt

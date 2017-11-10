@@ -58,7 +58,7 @@ if [ "$refreshSystem" == "1" ]; then
 	echo -e " Updating APT-GET libraries and installed packages..."
     echo -e "--------------------------------------------------------------------------"
 	sudo apt-get -y update 							# Update library
-	if [ $? -eq 0 ]; then                                                  $
+	if [ $? -eq 0 ]; then
 		echo -e "\n\nAPT-GET update complete\n\n"
 	else
 		echo -e "\n\nAPT-GET update failed\nRun again later.\n\n"

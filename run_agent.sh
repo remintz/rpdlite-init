@@ -2,10 +2,14 @@
 
 PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 MAPPED_DIR=/home/acn-iot/node-red-user-data
+LOCAL_IP_FILE=$MAPPED_DIR/local_ip.txt
 VERBOSE=
 IMAGE=dockerhub.accenture.com/renato.mintz/rpdlite-agent
 CONTAINER_NAME=agent-container
 HOSTNAME=$(hostname -f)
+LOCAL_IP=$(ip -4 addr show wlan0 | grep -Po 'inet \K[\d.]+')
+
+echo $LOCAL_IP > $LOCAL_IP_FILE
 
 function usage
 {
@@ -29,7 +33,7 @@ while [ "$1" != "" ]; do
 
         -v)    VERBOSE=-vvvvv
                ;;
-
+               
         -n)    shift
                CONTAINER_NAME=$1
                ;;
@@ -53,11 +57,9 @@ if [ ! -z "$VERBOSE" ]; then
    echo "VERBOSE: $VERBOSE"
 fi
 
-_IP=$(ip -4 addr show wlan0 | grep -Po 'inet \K[\d.]+')
-
 if [ ! "$(docker ps -a | grep $CONTAINER_NAME)" ]; then
    echo $(date -u) "Container $CONTAINER_NAME not found"
-   docker run -d --net=host -v $MAPPED_DIR:/data  --user=root --hostname=$HOSTNAME -e DOCKER_HOST_IP=$_IP --name $CONTAINER_NAME $IMAGE
+   docker run -d --net=host -v $MAPPED_DIR:/data  --user=root --hostname=$HOSTNAME --name $CONTAINER_NAME $IMAGE
 else
    if [ "$(docker ps -aq -f status=running -f name=$CONTAINER_NAME)" ]; then
       echo $(date -u) "Container $CONTAINER_NAME already running"
